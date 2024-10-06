@@ -12,7 +12,7 @@ link https://github.com/zhouxingtuan/rocket
     (5) 子线程间可以实现通信，接口 rpc:send、rpc:broadcast
     (6) 线程可以与其它服务进程节点通过WebSocket建立连接，组建服务网络；也可以通过http请求来与其它服务通信rpc:http
     (7) 封装好的定时器 handler:startTimer(componentName, timerId, obj, funcName, timeout, loop, fromTime)
-    (8) 一套完整的Lua类系统和业务逻辑处理封装
+    (8) 一套完整的Lua类系统和业务逻辑处理封装，支持使用json或者eproto作为交互协议
     (9) 提供连接MySQL数据库和Redis数据库的封装
     (10) 源代码模块划分清晰，代码量少，便于阅读、学习和修改
 
