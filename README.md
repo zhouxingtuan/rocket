@@ -1,6 +1,7 @@
 # rocket
 rocket is a multi thread web server.
 rocket 是一个多线程架构的web服务器
+支持作为带状态（比如游戏）服务器使用
 
 link https://github.com/zhouxingtuan/rocket
 
