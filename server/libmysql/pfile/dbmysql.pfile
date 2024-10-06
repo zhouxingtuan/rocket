@@ -1,0 +1,26 @@
+
+// 统一所有数据类型的使用
+typedef char 						int8;
+typedef short 					int16;
+typedef int 						int32;
+typedef long long   				int64;
+typedef unsigned char 			uint8;
+typedef unsigned short  			uint16;
+typedef unsigned int    			uint32;
+typedef unsigned long long      uint64;
+
+class DBMysql
+{
+    DBMysql(void);
+    ~DBMysql(void);
+
+    bool isAvailable(void);
+	bool connectMySql(const char* ip, const char* user, const char* pwd, const char* db, uint16 port);
+	void closeMysql(void);
+	bool pingMysql(void);
+	int64 getLastAutoID(void);
+	void setAutoCommit(bool on);
+	bool commit(void);
+	bool rollback(void);
+};
+

@@ -1,0 +1,51 @@
+
+安装c++
+apt-get install gcc
+apt-get install g++
+
+安装最新cmake
+apt install cmake
+snap install cmake --classic
+
+安装openssl
+apt-get install libssl-dev
+
+安装mysql-dev
+apt-get install libmysqld-dev
+apt-get install libmysqlclient-dev
+
+安装ssh
+systemctl status ssh
+sudo apt install openssh-server
+
+创建root账号
+sudo passwd root
+
+设置root账号可以登录
+vi /etc/ssh/sshd_config
+添加选项
+PermitRootLogin yes
+重启ssh
+systemctl  restart  ssh
+
+# 检查防火墙
+sudo ufw status verbose
+# 开启防火墙
+sudo ufw enable
+# 开放端口
+sudo ufw allow 22
+sudo ufw allow 80
+sudo ufw allow 443
+
+安装防火墙
+apt install firewalld
+systemctl status firewalld
+systemctl start firewalld
+systemctl stop firewalld
+systemctl restart firewalld
+firewall-cmd --add-port=22/tcp --permanent
+firewall-cmd --add-port=80/tcp --permanent
+firewall-cmd --add-port=443/tcp --permanent
+firewall-cmd --reload
+firewall-cmd --list-ports
+firewall-cmd --query-port=端口号/tcp

@@ -1,0 +1,94 @@
+
+// 统一所有数据类型的使用
+typedef char 						int8;
+typedef short 					int16;
+typedef int 						int32;
+typedef long long   				int64;
+typedef unsigned char 			uint8;
+typedef unsigned short  			uint16;
+typedef unsigned int    			uint32;
+typedef unsigned long long      uint64;
+
+extern void setMaxLogSize(int logSize);
+extern int getMaxLogSize(void);
+extern void setLogLevel(int level);
+extern int getLogLevel(void);
+extern const char* getTimeString(void);
+extern const char* getTimeStringUS(void);
+extern const char* getTimeStringUSFile(void);
+
+extern void writeCppLog(const char* str);
+extern const char* getCppLogFileName(void);
+extern void writeRemoteLog(const char* fileName, const char* str);
+
+uint32 djb_hash(const char* str, uint32 length);
+
+int64 get_time_us(void);
+int64 get_time_ms(void);
+int64 get_time_s(void);
+int32 get_time_seed(void);
+int64 get_next_time_us(int64 timeCount);
+int64 get_next_time_ms(int64 timeCount);
+
+const char* convert_ip2str(uint32 ip);
+uint32 convert_str2ip(const char* ip);
+
+std::string url_encode(const char* str, unsigned int length);
+std::string url_decode(const char* str, unsigned int length);
+
+unsigned int crc32(unsigned int crc, const unsigned char* data, int64 count);
+int64 snappy_compress(const char* input, int64 input_length, std::string& compressed);
+bool snappy_uncompress(const char* compressed, int64 compressed_length, std::string& uncompressed);
+
+class Handler
+{
+    // 线程间通信
+    virtual void broadcast(const char* ptr, int length);
+    virtual bool send(const char* ptr, int length, unsigned short serverIndex);
+
+    uint32 startTimer(uint32 callbackID, int64 timeCount, int64 fromTime);	// 开始一个计时器
+    bool removeTimer(uint32 handle);						// 移除计时器
+    bool changeTimerCallbackID(uint32 handle, uint32 callbackID);		// 更改计时器的回调ID
+    bool changeTimer(uint32 handle, uint32 callbackID, int64 timeCount, int64 fromTime);		// 更改计时器的时间
+    int64 getTimerLeft(uint32 handle);						// 获取计时器剩余时间
+
+    void setNextFrameActive(void);
+    Manager* getManager(void){ return m_pManager; }
+};
+
+class RequestData
+{
+	RequestData(void);
+	virtual ~RequestData(void);
+    void initialize(const char* method, const char* url, const char* body, uint32 body_length, uint32 callbackID);
+    void setPhonyIP(uint32 phonyIP){ m_phonyIP = phonyIP; }
+    void setServerHandle(uint32 serverHandle){ m_serverHandle = serverHandle; }
+    void setKeepAlive(bool isKeepAlive){ m_isKeepAlive = isKeepAlive; }
+    void setLocalHost(const char* localhost){ m_localHost = localhost; }
+
+    void appendHeader(const char* field, const char* value);
+    void clearData(void);
+};
+
+class Manager
+{
+    bool closeConnect(uint32 handle);
+	uint32 openWebSocket(const char* url, uint32 callbackID, uint32 serverHandle, uint32 phonyIP);
+	bool sendWebSocket(uint32 handle, const char* ptr, int length);
+	bool bindConnect(uint32 handle, uint32 serverHandle, uint32 callbackID);
+	uint32 sendHttpRequest(uint32 handle, RequestData *pRequest);
+    bool responseHttp(uint32 handle, const char* ptr, int length);
+
+    RequestData* getRequestData(void){ return &m_tempRequestData; }
+	unsigned int getServerHandle(void){ return m_serverHandle.handle; }
+	unsigned char getGroupIndex(void){ return m_serverHandle.getGroupIndex();}
+	unsigned char getServerType(void){ return m_serverHandle.getServerType(); }
+	unsigned short getServerIndex(void){ return m_serverHandle.getServerIndex(); }
+    void setServerType(unsigned char type){ m_serverHandle.setServerType(type); }
+    void setGroupIndex(unsigned char groupIndex){ m_serverHandle.setGroupIndex(groupIndex); }
+
+	bool initHttpsCertificate(const char* publicKey, const char* privateKey);
+
+    void setActiveNextFrameEnd(bool active){ m_activeNextFrameEnd = active; }
+    bool isActiveNextFrameEnd(void){ return m_activeNextFrameEnd; }
+}

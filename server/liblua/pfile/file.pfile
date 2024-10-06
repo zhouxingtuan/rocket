@@ -1,0 +1,44 @@
+
+#define BLOCK_SIZE 4096				// 每个文件块的大小
+#define MAX_EXPAND_BLOCK_SIZE 16777216	// 16M，最大保存的单个文件块长度
+
+class File
+{
+    File(void);
+    ~File(void);
+
+    virtual bool openFile(bool createNew);
+    virtual void closeFile(void);
+    virtual bool touchFile(const char* checkHead, int checkLength);
+    // offset >= 0从头部开始计算偏移； offset < 0 从尾部开始计算偏移
+    virtual bool writeData(int64 offset, const char* pData, int64 length);
+//    virtual bool readData(int64 offset, char* pData, int64 length);
+//    virtual bool fastReadData(int64 offset, char* pData, int64 length);
+    virtual bool fastWriteData(int64 offset, const char* pData, int64 length, bool clearAll);
+
+	bool renameFile(const char* newName);
+	bool removeFile(const char* fileName);
+    void setFileName(const char* name);
+    const std::string& getFileName(void);
+    int64 getFileLength(void);
+    int getExpandSize(void);
+    void setExpandSize(int exp);
+    int getFileHandle(void);
+	int64 fileSeek(int64 offset, int seek);
+	int64 readTell(void);
+	int64 writeTell(void);
+	int flush(void);
+	bool isOpen(void);
+};
+
+class MapFile : public File
+{
+    MapFile(void);
+    ~MapFile(void);
+
+    bool syncFile(bool saveAll, bool asyncSave);
+    bool syncBlock(int64 offset, uint64 length, bool asyncSave);
+    void moveTo(int64 to, int64 offset, uint64 length);
+    void markDirtyBlock(int64 offset, uint64 length, bool mark);
+};
+

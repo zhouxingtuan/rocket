@@ -1,0 +1,26 @@
+
+package rocket;
+
+message empty
+{
+
+}
+
+message rpc
+{
+    uint32 msg_id = 1;          // 消息ID
+    uint32 callback_id = 2;     // 回调ID
+    int32 error_code = 3;       // 错误码ID
+    int32 command = 4;          // 请求还是回应 1请求 2回应
+    uint32 uid = 5;            // 玩家UID
+    bytes body = 6;            // 消息数据body
+    string msg = 7;            // http请求验证信息
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+
+$#include "manual.hpp"
+$#include "level.h"
+
+$pfile "manager.pfile"
+
+$pfile "file.pfile"
+
+$pfile "md5.pfile"
+

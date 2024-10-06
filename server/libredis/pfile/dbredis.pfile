@@ -1,0 +1,22 @@
+
+// 统一所有数据类型的使用
+typedef char 						int8;
+typedef short 					int16;
+typedef int 						int32;
+typedef long long   				int64;
+typedef unsigned char 			uint8;
+typedef unsigned short  			uint16;
+typedef unsigned int    			uint32;
+typedef unsigned long long      uint64;
+
+class DBRedis
+{
+    DBRedis(void);
+    ~DBRedis(void);
+
+    bool isAvailable(void);
+	bool connectRedis(const char* ip, uint16 port);
+	void closeRedis(void);
+	bool identifyRedis(const char* pwd);
+};
+

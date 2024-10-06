@@ -1,0 +1,6 @@
+
+cd pfile
+
+tolua++ -o ../automysql.cpp automysql.pfile
+
+cd ../
