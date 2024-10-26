@@ -90,7 +90,7 @@ typedef std::vector<char> CharVector;
 class HttpCommon : public EpollObject
 {
 protected:
-	http_parser m_paeser;
+	http_parser m_parser;
 	CharVector m_readBuffer;
 	CharVector m_writeBuffer;
 	char m_httpState;
@@ -202,7 +202,8 @@ public:
 	bool checkEpollState(void);
 	bool setEpollState(uint32 events);
 	void initialize(void);
-	inline http_parser* getParser(void){ return &m_paeser; }
+	unsigned int getStatusCode(void){ return m_parser.status_code; }
+	inline http_parser* getParser(void){ return &m_parser; }
 	inline int getOffsetAt(const char* at){ return (int)(at - getReadBuffer()->data()); }
 	void checkEpollRemove(void);
 };

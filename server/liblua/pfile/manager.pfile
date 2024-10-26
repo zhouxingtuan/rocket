@@ -64,7 +64,6 @@ class RequestData
     void setPhonyIP(uint32 phonyIP){ m_phonyIP = phonyIP; }
     void setServerHandle(uint32 serverHandle){ m_serverHandle = serverHandle; }
     void setKeepAlive(bool isKeepAlive){ m_isKeepAlive = isKeepAlive; }
-    void setLocalHost(const char* localhost){ m_localHost = localhost; }
 
     void appendHeader(const char* field, const char* value);
     void clearData(void);

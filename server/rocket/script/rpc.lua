@@ -190,9 +190,9 @@ function rpc:onReceiveHttp(handle, serverHandle, ip, method, url, body, headers)
     rpcReq.headers = headers
     return rpc:doingHttpRequest(rpcReq.msg_id, rpcReq)
 end
-function rpc:onHttpResponse(handle, serverHandle, callbackID, isRequestOK, body, headers)
-    log_debug("onHttpResponse", handle, serverHandle, callbackID, isRequestOK, body, headers)
-    return rpc:doingHttpResponse(handle, serverHandle, callbackID, isRequestOK, body, headers)
+function rpc:onHttpResponse(handle, serverHandle, callbackID, statusCode, isRequestOK, body, headers)
+    log_debug("onHttpResponse", handle, serverHandle, callbackID, statusCode, isRequestOK, body, headers)
+    return rpc:doingHttpResponse(handle, serverHandle, callbackID, statusCode, isRequestOK, body, headers)
 end
 function rpc:onNextFrameActive()
     return rpc:doingNextFrameActive()
@@ -386,9 +386,9 @@ function rpc:http(method, url, headers, body, response, timeout, handle, isKeepA
             return -9
         end
     end
-    if method == "POST" and headers["Content-Length"] == nil and headers["content-length"] == nil then
-        headers["Content-Length"] = #body
-    end
+    --if method == "POST" and headers["Content-Length"] == nil and headers["content-length"] == nil then
+    --    headers["Content-Length"] = #body
+    --end
     local pRequestData = g_pManager:getRequestData()
     pRequestData:initialize(method, url, body, #body, callbackID)
     for k,v in pairs(headers) do
@@ -1037,8 +1037,8 @@ function rpc:responseHttpWithBody(responseBuffer, headers, rpcReq)
         log_debug("rpc:responseHttpWithBody for response OK", rpcReq.url, handle, "msg_id", rpcReq.msg_id, "uid", rpcReq.uid)
     end
 end
-function rpc:doingHttpResponse(handle, serverHandle, callbackID, isRequestOK, body, headers)
-    log_debug("rpc:doingHttpResponse with handle", handle, isRequestOK, "serverHandle", serverHandle, "callbackID", callbackID)
+function rpc:doingHttpResponse(handle, serverHandle, callbackID, statusCode, isRequestOK, body, headers)
+    log_debug("rpc:doingHttpResponse with handle", handle, statusCode, isRequestOK, "serverHandle", serverHandle, "callbackID", callbackID)
     local coInfo = rpc:getInfoByID(callbackID)
     if coInfo == nil then
         log_error("rpc:doingHttpResponse can not find coInfo", callbackID)
@@ -1046,6 +1046,7 @@ function rpc:doingHttpResponse(handle, serverHandle, callbackID, isRequestOK, bo
     end
     -- 执行协程函数
     local response = {
+        statusCode = statusCode;
         isOK = isRequestOK;
         body = body;
         headers = headers;

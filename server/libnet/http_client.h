@@ -19,7 +19,6 @@ public:
     void setPhonyIP(uint32 phonyIP){ m_phonyIP = phonyIP; }
     void setServerHandle(uint32 serverHandle){ m_serverHandle = serverHandle; }
     void setKeepAlive(bool isKeepAlive){ m_isKeepAlive = isKeepAlive; }
-    void setLocalHost(const char* localhost){ m_localHost = localhost; }
 
     void splitURL(void){
         splitURL(m_requestType, m_requestHost, m_requestPort, m_requestRoute);
@@ -36,7 +35,6 @@ public:
 
 	void clearData(void);
 public:
-	std::string m_localHost;
 	std::string m_requestType;
 	std::string m_requestHost;
 	std::string m_requestPort;

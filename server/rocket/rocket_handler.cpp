@@ -97,10 +97,12 @@ void RocketHandler::onHttpResponse(HttpClient* pObject, const char* ptr, int len
     uint32 handle = pObject->getHandle();
     uint32 serverHandle = pObject->getServerHandle();
     uint32 callbackID = pObject->getCallbackID();
+    uint32 statusCode = pObject->getStatusCode();
     m_pScript->pushFunction("onHttpResponse");
     m_pScript->pushNumber(handle);
     m_pScript->pushNumber(serverHandle);
     m_pScript->pushNumber(callbackID);
+    m_pScript->pushNumber(statusCode);
     m_pScript->pushBool(isRequestOK);
     m_pScript->pushString(ptr, length);
     HStringMap& temp = pObject->getHeaders();

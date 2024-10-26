@@ -595,13 +595,14 @@ void Manager::initializeOpenSSL(void){
 #else
     LOG_INFO("initializeOpenSSL load in old");
     OPENSSL_config(NULL);
+#endif
+
 	/* SSL 库初始化 */
 	SSL_library_init();
 	/* 载入所有 SSL 错误消息 */
 	SSL_load_error_strings();
 	/* 载入所有 SSL 算法 */
 	OpenSSL_add_all_algorithms();
-#endif
 
 	// 初始化http所需
 	if(NULL == m_pClientSSLCTX){

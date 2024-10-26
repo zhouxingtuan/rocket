@@ -16,7 +16,6 @@ RequestData::~RequestData(void){
 }
 
 void RequestData::clearData(void){
-    m_localHost.clear();
     m_requestType.clear();
     m_requestHost.clear();
     m_requestPort.clear();
@@ -74,9 +73,7 @@ void RequestData::splitURL(std::string& requestType, std::string& requestHost, s
 void RequestData::joinUpgradeData(std::string& requestData){
     requestData.clear();
     requestData.append(m_method + " " + m_requestRoute + " " + "HTTP/1.1\r\n");
-    if(!m_localHost.empty()){
-        requestData.append("Host: " + m_localHost + "\r\n");
-    }
+    requestData.append("Host: " + m_requestHost + "\r\n");
     requestData.append("Upgrade: websocket\r\n");
     requestData.append("Connection: Upgrade\r\n");
     requestData.append("Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n");
@@ -96,14 +93,14 @@ void RequestData::joinData(const std::string& requestRoute, std::string& request
 //    else{
 //        requestData.append("Connection: close\r\n");
 //    }
-    if(!m_localHost.empty()){
-        requestData.append("Host: " + m_localHost + "\r\n");
-    }
+    requestData.append("Host: " + m_requestHost + "\r\n");
     requestData.append("Accept: */*\r\n");
-//        requestData.append("Accept-Encoding: gzip, deflate, br\r\n");
-//        requestData.append("Accept-Language: zh-CN,zh;q=0.9\r\n");
     for(auto &str : m_headers){
         requestData.append(str + "\r\n");
+    }
+    if(m_method == "GET"){
+        requestData.append("\r\n");
+        return;
     }
     requestData.append("Content-Length: " + std::to_string((int)m_body.size()) + "\r\n");
     requestData.append("\r\n");

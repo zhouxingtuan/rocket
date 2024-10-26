@@ -162,8 +162,8 @@ end
 function onReceiveHttp(handle, serverHandle, ip, method, url, body, headers)
 	return xpcall(function() return rpc:onReceiveHttp(handle, serverHandle, ip, method, url, body, headers) end, __G__TRACKBACK__)
 end
-function onHttpResponse(handle, serverHandle, callbackID, isRequestOK, body, headers)
-	return xpcall(function() return rpc:onHttpResponse(handle, serverHandle, callbackID, isRequestOK, body, headers) end, __G__TRACKBACK__)
+function onHttpResponse(handle, serverHandle, callbackID, statusCode, isRequestOK, body, headers)
+	return xpcall(function() return rpc:onHttpResponse(handle, serverHandle, callbackID, statusCode, isRequestOK, body, headers) end, __G__TRACKBACK__)
 end
 function onNextFrameActive()
 	return xpcall(function() return rpc:onNextFrameActive() end, __G__TRACKBACK__)

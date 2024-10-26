@@ -1,6 +1,6 @@
 /*
 ** Lua binding: liblua
-** Generated automatically by tolua++-1.0.92 on Fri Oct  4 00:24:01 2024.
+** Generated automatically by tolua++-1.0.92 on Sat Oct 26 05:54:03 2024.
 */
 
 #ifndef __cplusplus
@@ -1293,39 +1293,6 @@ static int tolua_liblua_RequestData_setKeepAlive00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'setKeepAlive'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setLocalHost of class  RequestData */
-#ifndef TOLUA_DISABLE_tolua_liblua_RequestData_setLocalHost00
-static int tolua_liblua_RequestData_setLocalHost00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"RequestData",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  RequestData* self = (RequestData*)  tolua_tousertype(tolua_S,1,0);
-  const char* localhost = ((const char*)  tolua_tostring(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setLocalHost'", NULL);
-#endif
-  {
-   self->setLocalHost(localhost);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setLocalHost'.",&tolua_err);
  return 0;
 #endif
 }
@@ -3114,7 +3081,6 @@ TOLUA_API int tolua_liblua_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setPhonyIP",tolua_liblua_RequestData_setPhonyIP00);
    tolua_function(tolua_S,"setServerHandle",tolua_liblua_RequestData_setServerHandle00);
    tolua_function(tolua_S,"setKeepAlive",tolua_liblua_RequestData_setKeepAlive00);
-   tolua_function(tolua_S,"setLocalHost",tolua_liblua_RequestData_setLocalHost00);
    tolua_function(tolua_S,"appendHeader",tolua_liblua_RequestData_appendHeader00);
    tolua_function(tolua_S,"clearData",tolua_liblua_RequestData_clearData00);
   tolua_endmodule(tolua_S);
