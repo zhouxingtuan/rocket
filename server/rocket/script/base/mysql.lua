@@ -32,22 +32,22 @@ function mysql:ctor(skipTimer)
 	self.m_pDBMysql = m_pDBMysql
 	if not skipTimer then
         log_debug("mysql start timer check")
-        local timer = require("timer")
-        self.m_coInfo = timer:schedule(function()
-            self:tryPing()
-            self:checkToSave()
-        end, 10000, true)
+        --local timer = require("timer")
+        --self.m_coInfo = timer:schedule(function()
+        --    self:tryPing()
+        --    self:checkToSave()
+        --end, 10000, true)
 	end
 	self.m_hash_queue = queue.new()
 end
 function mysql:dtor()
 	self:release()
-	local m_coInfo = self.m_coInfo
-	if m_coInfo ~= nil then
-		self.m_coInfo = nil
-        local timer = require("timer")
-		timer:unschedule(m_coInfo)
-	end
+	--local m_coInfo = self.m_coInfo
+	--if m_coInfo ~= nil then
+	--	self.m_coInfo = nil
+     --   local timer = require("timer")
+	--	timer:unschedule(m_coInfo)
+	--end
 	self.m_hash_queue = nil
 end
 function mysql:getDataBaseName()

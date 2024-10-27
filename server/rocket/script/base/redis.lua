@@ -28,21 +28,21 @@ function redis:ctor(skipTimer)
 	-- 设定计时器
 	if not skipTimer then
         log_debug("redis start timer check")
-		local timer = require("timer")
-		self.m_coInfo = timer:schedule(function()
-			self:tryPing()
-		end, 10000, true)
+		--local timer = require("timer")
+		--self.m_coInfo = timer:schedule(function()
+		--	self:tryPing()
+		--end, 10000, true)
 	end
 end
 function redis:dtor()
 	self:release()
-	local m_coInfo = self.m_coInfo
-	if m_coInfo ~= nil then
-		self.m_coInfo = nil
-        log_debug("redis remove timer")
-        local timer = require("timer")
-		timer:unschedule(m_coInfo)
-	end
+	--local m_coInfo = self.m_coInfo
+	--if m_coInfo ~= nil then
+	--	self.m_coInfo = nil
+     --   log_debug("redis remove timer")
+     --   local timer = require("timer")
+	--	timer:unschedule(m_coInfo)
+	--end
 end
 function redis:tryPing()
 --    log_debug("tryPing called")
