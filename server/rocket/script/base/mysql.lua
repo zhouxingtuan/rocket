@@ -21,7 +21,7 @@ local log_error = log_error
 local queue = require("queue")
 
 log_debug("require module libmysql")
-require("libmysql")
+--require("libmysql")
 local DBMysql = DBMysql
 
 local mysql = class("mysql")

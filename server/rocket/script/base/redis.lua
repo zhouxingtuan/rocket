@@ -17,7 +17,7 @@ local log_error = log_error
 local log_info = log_info
 
 log_debug("require module libredis")
-require("libredis")
+--require("libredis")
 local DBRedis = DBRedis
 
 local redis = class("redis")
