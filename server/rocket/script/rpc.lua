@@ -317,7 +317,7 @@ function rpc:send(serverIndex, msgID, uid, request, response)
     if type(request) == "string" then
         body = request
     else
-        body = rpc:encodeResponseByInfo(msgInfo, request)
+        body = rpc:encodeRequestByInfo(msgInfo, request)
         if not body then
             log_error("rpc:send encodeRequest failed", msgID, request)
             return -2
@@ -359,9 +359,9 @@ function rpc:broadcast(msgID, request)
         log_error("rpc:broadcast msgID not handle", msgID)
         return false
     end
-    local body = rpc:encodeResponseByInfo(msgInfo, request)
+    local body = rpc:encodeRequestByInfo(msgInfo, request)
     if not body then
-        log_error("rpc:broadcast encodeResponseByInfo failed", msgID, request)
+        log_error("rpc:broadcast encodeRequestByInfo failed", msgID, request)
         return false
     end
     local rpcReq = {
@@ -1223,12 +1223,15 @@ function rpc:encodeRequest(msgID, request)
         log_error("encodeRequest failed info == nil", msgID)
         return
     end
+    return rpc:encodeRequestByInfo(info, request)
+end
+function rpc:encodeRequestByInfo(info, request)
     local msgSource = info.msgSource
     if msgSource == "pb" then
         -- log_debug("requestName:", info.requestName, ", request:", request)
         local buffer,err = eproto.encode(info.requestName, request)
         if not buffer then
-            log_error("encodeRequest failed eproto.encode", msgID, "code", err, info.requestName, request)
+            log_error("encodeRequest failed eproto.encode", messageIndex, "code", err, info.requestName, request)
             return
         end
         return buffer
